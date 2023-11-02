@@ -1,0 +1,21 @@
+site_name: MV2 dynamic library
+#site_url: https://
+site_url: ""
+use_directory_urls: false
+nav:
+    - Home: index.md
+    - 'User Guide': 
+        - 'Structures and functions' : procedures.md
+        - 'Examples' : examples.md
+        - 'Project content' : components.md
+
+    - About:
+        - 'Release Notes': 'release-notes.md'
+        - 'License': 'license.md'
+
+plugins:
+    - search: 
+#        indexing: 'sections'
+#        prebuild_index: true
+        min_search_length: 2
+theme: readthedocs

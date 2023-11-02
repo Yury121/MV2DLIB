@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Structures and functions - MV2 dynamic library</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Structures and functions";
+        var mkdocs_page_input_path = "procedures.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="index.html" class="icon icon-home"> MV2 dynamic library
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="index.html">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="procedures.html">Structures and functions</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2setkey">MV2SetKey</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2encrypt">MV2Encrypt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2decrypt">MV2Decrypt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2getstatus">MV2GetStatus</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2getstep">MV2GetStep</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2release">MV2Release();</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2calcrecomendedsizes">MV2CalcRecomendedSizes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#structures-and-constants">Structures and constants</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#mv2_buffer">MV2_BUFFER</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#defined-constants">Defined Constants</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="components.html">Project content</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">About</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="release-notes.html">Release Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="license.html">License</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MV2 dynamic library</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html" class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>User Guide &raquo;</li>
+      <li>Structures and functions</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="users-structure-and-functions">User's structure and functions</h1>
+<p>To work, you must specify a key and use the encryption or decryption function. A key is an arbitrary sequence of bytes of 16, 32, 64 or 256 bytes in size.</p>
+<p>This library is multi-threaded. Different threads use different memory objects to manipulate data.
+When a thread calls <strong>MV2SetKey</strong> function for the first time, an MV2 object is created to implement the main functions. The MV2Release function is used to free up the memory of an object.
+When the library is loaded into the calling process's memory, an object is created to implement the basic functionality.</p>
+<h2 id="functions">Functions</h2>
+<h3 id="mv2setkey">MV2SetKey</h3>
+<p>This function creates an MV2 object if it does not exist and sets the encryption/decryption key defined as</p>
+<pre><code class="language-c">bool MV2SetKey( unsigned char * srcKey, int szKey ); 
+</code></pre>
+<p><strong>Parameters:</strong><br />
+<strong><em>srcKey</em></strong> - [in] Pointer to the buffer containing the key. To be leveled up to the unsigned int size.<br />
+<strong><em>szKey</em></strong> -  [in] Size of the key in bytes. Current options are 16(128bits), 32(256 bits), 64 (512 bits) 128 (1024 bits) or 256 (2048 bits).</p>
+<p><strong>Return Values</strong><br />
+   If the function succeeds, the return value is TRUE. </p>
+<p><strong>Remarks</strong><br />
+    This function must be called before encrypting or decrypting data. </p>
+<h3 id="mv2encrypt">MV2Encrypt</h3>
+<p>This function encrypts the data and is defined as</p>
+<pre><code class="language-c">bool MV2Encrypt( MV2_BUFFER &amp;mv2Buf, long RestLength ); 
+</code></pre>
+<p><strong>Parameters</strong><br />
+<strong><em>mv2Buf</em></strong> - [in] \ [out] Structure containing address and size of buffers for input and output data                <strong><em>SrcBuf</em></strong> - [in] - pointer to the data block to be encrypted<br />
+<strong><em>szSrcBuf</em></strong> - [in] - size of data block to be encrypted in bytes; 
+   <strong><em>CoreBuf</em></strong> - [in\out] - pointer to the memory area in which the core is to be placed; 
+   <strong><em>szCoreBuf</em></strong> - [in] - max size of memory area in bytes; [out] - size of the output core in bytes 
+   <strong><em>FlagBuf</em></strong> - [in\out] - pointer to the memory area in which flags are to be placed; 
+   <strong><em>szFlagBuf</em></strong> - [in] - max size of memory area in bytes; [out] - size of the output flags in bytes 
+   <strong><em>RetCode</em></strong> - [out] - termination code;<br />
+<strong><em>RestLength</em></strong> - [in] Encryption parameter. Values from 1 to 50 set the number of encryptions that have to be performed. Values more than <strong>50</strong> set max length for the core upon encryption. </p>
+<p><strong>Return Values</strong><br />
+    If the function succeeds, the return value is TRUE. If RestLength is less than 0, the return value is FALSE. If an error occurs during encryption, the function returns FALSE. Termination code is in the field RetCode of the structure MV2_BUFFER. The encrypted data are located at the addresses from the fields CoreBuf and FalgBuf, the sizes of the encrypted data are located in the fields szCoreBuf and szFalgBuf of the structure MV2_BUFFER. </p>
+<p><strong>Remarks</strong><br />
+    Before using the function set the encryption key by the function <strong>MV2SetKey</strong>. The calling process has to allocate memory before using MV2Encrypt.<br />
+    Field <strong><em>SrcBuf</em></strong> of the input structure MV2_BUFFER points at the address of the data that have to be encrypted. Field <strong><em>szSrcBuf</em></strong> contains data size in bytes. <br />
+    Fields <strong><em>CoreBuf</em></strong> and <strong><em>FlagBuf</em></strong> point at the addresses of memory blocks serving for allocation of the output data. </p>
+<h3 id="mv2decrypt">MV2Decrypt</h3>
+<p>This function decrypts the data and is defined as</p>
+<pre><code class="language-c">bool MV2Decrypt(MV2_BUFFER&amp; mv2Buf);
+</code></pre>
+<p><strong>Parameters:</strong><br />
+<strong><em>mv2Buf</em></strong> - [in] \ [out] Structure containing addresses and sizes of buffers for the input and output data<br />
+<strong><em>SrcBuf</em></strong> [out] - address of the buffer in which decrypted data have to be placed to<br />
+<strong><em>szSrcBuf</em></strong> [out] - max size of the buffer in bytes;<br />
+<strong><em>CoreBuf</em></strong> [in] - address of the memory area containing the core;<br />
+<strong><em>szCoreBuf</em></strong> [in] - size of the core in bytes;<br />
+<strong><em>FlagBuf</em></strong> [in] - address of the memory area containing flags;<br />
+<strong><em>szFlagBuf</em></strong> [in] - size of flags in bytes;<br />
+<strong><em>RetCode</em></strong> [out] - termination code;  </p>
+<p><strong>Return Values</strong><br />
+    If the function succeeds, the return value is TRUE. If there is an error during decryption, the function returns FALSE. Termination code is in the field RetCode of the structure MV2_BUFFER. Decrypted data are placed to the memory area with the address from the field SrcBuf, the size is set by the fields szSrcBuf and szFalgBuf of the structure MV2_BUFFER. </p>
+<p><strong>Remarks</strong><br />
+    Before using the function set the decryption key by the function MV2SetKey. The calling process has to allocate memory before using MV2Decrypt. </p>
+<h3 id="mv2getstatus">MV2GetStatus</h3>
+<p>This function returns the current status of the process and is defined as</p>
+<pre><code class="language-c">int MV2GetStatus();
+</code></pre>
+<p><strong>Parameters:</strong>  </p>
+<p><strong>Return Values</strong>  </p>
+<p><strong>Remarks</strong>  </p>
+<h3 id="mv2getstep">MV2GetStep</h3>
+<p>The function returns the number of performed rounds and is defined as </p>
+<pre><code class="language-c">int MV2GetStep();
+</code></pre>
+<p><strong>Parameters:</strong><br />
+    This function has no parameters. </p>
+<p><strong>Return Values</strong><br />
+   Function returns current status of the encryption\decryption process or an error code. </p>
+<h3 id="mv2release">MV2Release();</h3>
+<p>The function destroys the MV2 object for the current thread and is defined as</p>
+<pre><code class="language-c">void MV2Release();
+</code></pre>
+<p><strong>Parameters:</strong><br />
+    This function has no parameters. </p>
+<p><strong>Return Values</strong><br />
+    The function does not return any value.</p>
+<h3 id="mv2calcrecomendedsizes">MV2CalcRecomendedSizes</h3>
+<p>Helper function for calculating buffer sizes for CORE and FLAGS components. It defines as</p>
+<pre><code class="language-c">bool MV2CalcRecomendedSizes(  
+    unsigned int cbSource, unsigned int dwStep, 
+    unsigned int&amp; cbCore, unsigned int&amp; cbFlags
+);
+</code></pre>
+<p><strong>Parameters:</strong><br />
+<strong><em>cbSource</em></strong> - [in] plaintext size<br />
+<strong><em>dwStep</em></strong> - [in] Number of rounds (if less than 50) or maximum CORE size (otherwise)<br />
+<strong><em>cbCore</em></strong> - [in]  \ [out] recommended CORE buffer size 
+<strong><em>cbFlags</em></strong> - [in] \ [out] recommended maximum buffer size for FLAGS  </p>
+<p><strong>Return Values</strong>
+   Returns TRUE if successful or FALSE otherwise.</p>
+<p>The function calculates the maximum buffer sizes and fills in the corresponding fields.</p>
+<h2 id="structures-and-constants">Structures and constants</h2>
+<h3 id="mv2_buffer">MV2_BUFFER</h3>
+<p>This structure contains the addresses and sizes of the input and output data and is defined as follows:</p>
+<pre><code class="language-c">typedef struct tagMV2_BUFFER {
+    int     szSrcBuf; // plaintext buffer size 
+    unsigned char*  SrcBuf; // pointer to plaintext buffer
+    int     szCoreBuf; // buffer size for CORE data (encryption) or CORE data (decryption)
+    unsigned char*  CoreBuf; // pointer to the CORE buffer
+    int     szFlagBuf; // buffer size for FLAGS data (encryption) or FLAGS data (decryption)
+    unsigned char*  FlagBuf; // pointer to the FLAGS buffer
+    int     RetCode; // operation result code
+}MV2_BUFFER;
+</code></pre>
+<h3 id="defined-constants">Defined Constants</h3>
+<pre><code class="language-c">enum KeySize {
+    sizeZero = 0,
+    size256bits = 32,
+    size512bits = 64,
+    size1024bits = 128,
+    size2048bits = 256,
+    sizeLast
+};
+enum MV2ERROR {
+    MV2ERR_WORK = -1,
+    MV2ERR_DWORK = -2,
+    MV2ERR_OK = 0,
+    MV2ERR_SRCNOTEXIST = 1,
+    MV2ERR_OPEN = 2,
+    MV2ERR_INPUTRND = 22,
+    MV2ERR_MEMALLOC = 40,
+    MV2ERR_DECRYPT = 65,
+    MV2ERR_WRITE = 77,
+    MV2ERR_WRITEFLAG = 79,
+    MV2ERR_CREATEOUT = 80,
+    MV2ERR_KEYNOTSET = 99,
+    MV2ERR_KEYINT = 101,
+    MV2ERR_ENDFLAGS = 103,
+    MV2ERR_ENDCORE = 104,
+    MV2ERR_KEY = 105
+};
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="index.html" class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="index.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="examples.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

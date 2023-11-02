@@ -1,0 +1,14 @@
+; MV2DLL.def : Declares the module parameters for the DLL.
+
+LIBRARY      "MV2DLL"
+DESCRIPTION  'MV2 Algorithm Windows Dynamic Link Library'
+
+
+EXPORTS
+	MV2SetKey		
+	MV2Encrypt		
+	MV2Decrypt		
+	MV2GetStatus	
+	MV2CalcRecomendedSizes
+	MV2Release
+
